@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treino Rápido ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .timer-circle {
+            transition: stroke-dashoffset 0.1s linear;
+        }
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 2s infinite;
+        }
+        .check-anim {
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-rose-50 text-gray-800 min-h-screen pb-12">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="max-w-md mx-auto px-4 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold text-rose-600">Treino Dela ❤️</h1>
+                <p class="text-xs text-gray-500">5 min • Sem Impacto • Diário</p>
+            </div>
+            <div id="progress-text" class="text-sm font-semibold text-rose-500">0/6</div>
+        </div>
+        <!-- Progress Bar -->
+        <div class="h-1 bg-gray-100 w-full">
+            <div id="main-progress" class="h-1 bg-rose-500 w-0 transition-all duration-500"></div>
+        </div>
+    </header>
+
+    <!-- Intro -->
+    <div class="max-w-md mx-auto px-4 py-4">
+        <div class="bg-rose-100 rounded-lg p-3 text-sm text-rose-800 mb-4 flex items-start gap-2">
+            <span class="text-lg">🔥</span>
+            <p>Objetivo: Perder barriga e afinar braço. Sem dor, sem pulos. Vamos lá!</p>
+        </div>
+
+        <!-- Exercise List -->
+        <div id="exercise-list" class="space-y-4">
+            
+            <!-- Aquecimento -->
+            <div class="text-center py-2">
+                <span class="bg-white px-3 py-1 rounded-full text-xs font-bold text-gray-400 uppercase tracking-wide border">Aquecimento (30s)</span>
+                <p class="text-xs text-gray-500 mt-1">Marche no lugar levantando o joelho</p>
+            </div>
+
+            <!-- Ex 1: Timer -->
+            <div class="exercise-card bg-white p-4 rounded-xl shadow-sm border border-gray-100" data-id="1">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex gap-3">
+                        <div class="bg-rose-100 w-10 h-10 rounded-full flex items-center justify-center text-rose-600 font-bold shrink-0">1</div>
+                        <div>
+                            <h3 class="font-bold text-gray-800">Prancha de Joelho</h3>
+                            <p class="text-xs text-gray-500">Trabalha: Barriga e Cintura</p>
+                            <p class="text-xs text-rose-600 mt-1 font-medium">⚠️ Encolha a barriga, joelhos no chão.</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">20s</span>
+                </div>
+                <!-- Image Demo -->
+                <img src="https://static.vecteezy.com/ti/vetor-gratis/p1/8635525-mulher-fazendo-joelho-prancha-exercicio-plano-ilustracao-isolado-em-fundo-branco-vetor.jpg" alt="Exemplo Prancha de Joelho" class="w-full h-auto max-h-56 object-contain bg-white rounded-lg mb-3 border border-gray-100 mx-auto p-1">
+                
+                <div class="mt-3">
+                    <button onclick="startTimer(this, 20)" class="w-full py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-lg font-medium transition flex items-center justify-center gap-2 btn-action">
+                        <span>⏱️ Iniciar (20s)</span>
+                    </button>
+                    <div class="timer-display hidden mt-2 h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-rose-500 transition-all duration-1000 w-full" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ex 2: Reps -->
+            <div class="exercise-card bg-white p-4 rounded-xl shadow-sm border border-gray-100" data-id="2">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex gap-3">
+                        <div class="bg-rose-100 w-10 h-10 rounded-full flex items-center justify-center text-rose-600 font-bold shrink-0">2</div>
+                        <div>
+                            <h3 class="font-bold text-gray-800">Elevação de Quadril</h3>
+                            <p class="text-xs text-gray-500">Trabalha: Barriga Baixa e Glúteo</p>
+                            <p class="text-xs text-rose-600 mt-1 font-medium">Suba devagar, contraia o bumbum.</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">12x</span>
+                </div>
+                <!-- Image Demo -->
+                <img src="https://pacefit.com.br/wp-content/uploads/2017/02/elvacao-pelvica-300x300.png.webp" alt="Exemplo Elevação Pélvica" class="w-full h-auto max-h-56 object-contain bg-white rounded-lg mb-3 border border-gray-100 mx-auto p-1">
+
+                <div class="mt-3">
+                    <button onclick="markDone(this)" class="w-full py-2 border-2 border-rose-500 text-rose-500 hover:bg-rose-50 rounded-lg font-medium transition flex items-center justify-center gap-2 btn-action">
+                        <span>⭕ Marcar 12 repetições</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Ex 3: Timer -->
+            <div class="exercise-card bg-white p-4 rounded-xl shadow-sm border border-gray-100" data-id="3">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex gap-3">
+                        <div class="bg-rose-100 w-10 h-10 rounded-full flex items-center justify-center text-rose-600 font-bold shrink-0">3</div>
+                        <div>
+                            <h3 class="font-bold text-gray-800">Boxe no Ar</h3>
+                            <p class="text-xs text-gray-500">Trabalha: Braço e Cardio</p>
+                            <p class="text-xs text-rose-600 mt-1 font-medium">Soque rápido, abdômen duro.</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">25s</span>
+                </div>
+                <!-- Image Demo (GIF) -->
+                <img src="https://www.mundoboaforma.com.br/wp-content/uploads/2021/04/boxe-jab.gif" alt="Exemplo Boxe no Ar" class="w-full h-auto max-h-56 object-contain bg-white rounded-lg mb-3 border border-gray-100 mx-auto p-1">
+
+                <div class="mt-3">
+                    <button onclick="startTimer(this, 25)" class="w-full py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-lg font-medium transition flex items-center justify-center gap-2 btn-action">
+                        <span>⏱️ Iniciar (25s)</span>
+                    </button>
+                    <div class="timer-display hidden mt-2 h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-rose-500 transition-all duration-1000 w-full" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ex 4: Reps -->
+            <div class="exercise-card bg-white p-4 rounded-xl shadow-sm border border-gray-100" data-id="4">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex gap-3">
+                        <div class="bg-rose-100 w-10 h-10 rounded-full flex items-center justify-center text-rose-600 font-bold shrink-0">4</div>
+                        <div>
+                            <h3 class="font-bold text-gray-800">Abdominal Curto</h3>
+                            <p class="text-xs text-gray-500">Trabalha: Barriga Superior</p>
+                            <p class="text-xs text-rose-600 mt-1 font-medium">Olhe pro teto, não puxe o pescoço.</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">12x</span>
+                </div>
+                <!-- Image Demo (GIF) -->
+                <img src="https://www.mundoboaforma.com.br/wp-content/uploads/2023/02/47271301-abdominal-supra.gif" alt="Exemplo Abdominal Curto" class="w-full h-auto max-h-56 object-contain bg-white rounded-lg mb-3 border border-gray-100 mx-auto p-1">
+
+                <div class="mt-3">
+                    <button onclick="markDone(this)" class="w-full py-2 border-2 border-rose-500 text-rose-500 hover:bg-rose-50 rounded-lg font-medium transition flex items-center justify-center gap-2 btn-action">
+                        <span>⭕ Marcar 12 repetições</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Ex 5: Timer -->
+            <div class="exercise-card bg-white p-4 rounded-xl shadow-sm border border-gray-100" data-id="5">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex gap-3">
+                        <div class="bg-rose-100 w-10 h-10 rounded-full flex items-center justify-center text-rose-600 font-bold shrink-0">5</div>
+                        <div>
+                            <h3 class="font-bold text-gray-800">Elevação Lateral <span class="text-rose-500">(Sem peso)</span></h3>
+                            <p class="text-xs text-gray-500">Trabalha: Ombros e Tchauzinho</p>
+                            <p class="text-xs text-rose-600 mt-1 font-medium">Controle a descida.</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">20s</span>
+                </div>
+                <!-- Image Demo -->
+                <img src="https://static.vecteezy.com/ti/vetor-gratis/p1/16126552-homem-fazendo-exercicio-de-elevacao-lateral-ou-lateral-de-braco-duplo-levante-ambos-os-bracos-lateralmente-ate-a-horizontal-ilustracaoial-plana-isolada-no-fundo-branco-vetor.jpg" alt="Exemplo Elevação Lateral" class="w-full h-auto max-h-56 object-contain bg-white rounded-lg mb-3 border border-gray-100 mx-auto p-1">
+
+                <div class="mt-3">
+                    <button onclick="startTimer(this, 20)" class="w-full py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-lg font-medium transition flex items-center justify-center gap-2 btn-action">
+                        <span>⏱️ Iniciar (20s)</span>
+                    </button>
+                    <div class="timer-display hidden mt-2 h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-rose-500 transition-all duration-1000 w-full" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ex 6: Timer -->
+            <div class="exercise-card bg-white p-4 rounded-xl shadow-sm border border-gray-100" data-id="6">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex gap-3">
+                        <div class="bg-rose-100 w-10 h-10 rounded-full flex items-center justify-center text-rose-600 font-bold shrink-0">6</div>
+                        <div>
+                            <h3 class="font-bold text-gray-800">Rotação de Tronco</h3>
+                            <p class="text-xs text-gray-500">Trabalha: Cintura Lateral</p>
+                            <p class="text-xs text-rose-600 mt-1 font-medium">Em pé. Rápido mas controlado.</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">25s</span>
+                </div>
+                <!-- Image Demo -->
+                <img src="https://thumbs.dreamstime.com/b/rota%C3%A7%C3%A3o-do-tronco-imagem-realista-isolado-sobre-fundo-branco-n-168556772.jpg" alt="Exemplo Rotação Tronco" class="w-full h-auto max-h-56 object-contain bg-white rounded-lg mb-3 border border-gray-100 mx-auto p-1">
+
+                <div class="mt-3">
+                    <button onclick="startTimer(this, 25)" class="w-full py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-lg font-medium transition flex items-center justify-center gap-2 btn-action">
+                        <span>⏱️ Iniciar (25s)</span>
+                    </button>
+                    <div class="timer-display hidden mt-2 h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-rose-500 transition-all duration-1000 w-full" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Alongamento -->
+        <div class="mt-8 bg-purple-50 rounded-xl p-4 border border-purple-100">
+            <h3 class="font-bold text-purple-700 mb-2">🧘‍♀️ Alongamento Final (30s)</h3>
+            <ul class="text-sm text-purple-800 space-y-1 list-disc pl-4">
+                <li>Esticar braços acima da cabeça</li>
+                <li>Inclinar pro lado direito e depois esquerdo</li>
+                <li>Relaxar pescoço</li>
+            </ul>
+        </div>
+
+        <!-- Progressão Info -->
+        <div class="mt-6 text-center">
+            <p class="text-xs text-gray-400 mb-2">Meta: 7 dias seguidos</p>
+            <div class="bg-gray-100 rounded-lg p-3 text-xs text-gray-600">
+                <strong>Daqui a 7 dias:</strong> Aumentar +5seg ou +5 repetições em tudo. <br>
+                <strong>Daqui a 14 dias:</strong> Novo treino nível 2!
+            </div>
+        </div>
+
+        <button onclick="resetTraining()" class="w-full mt-8 py-3 text-gray-400 text-sm hover:text-gray-600">
+            Reiniciar tudo
+        </button>
+
+    </div>
+
+    <!-- Celebration Modal -->
+    <div id="modal-success" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 px-4">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full text-center transform transition-all scale-100">
+            <div class="text-5xl mb-4">🎉</div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Treino Concluído!</h2>
+            <p class="text-gray-600 mb-6">Você mandou muito bem hoje. Mais um dia pago!</p>
+            <button onclick="closeModal()" class="w-full bg-rose-500 text-white py-3 rounded-xl font-bold shadow-lg hover:bg-rose-600 transition">
+                Até amanhã!
+            </button>
+        </div>
+    </div>
+
+    <!-- Audio for Beep -->
+    <script>
+        // Simple Beep using AudioContext logic or fallback
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playBeep() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // A5
+            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.5);
+        }
+
+        let completedCount = 0;
+        const totalExercises = 6;
+        const progressEl = document.getElementById('main-progress');
+        const progressText = document.getElementById('progress-text');
+
+        function updateProgress() {
+            completedCount++;
+            const percentage = (completedCount / totalExercises) * 100;
+            progressEl.style.width = percentage + '%';
+            progressText.innerText = `${completedCount}/${totalExercises}`;
+
+            if (completedCount === totalExercises) {
+                setTimeout(() => {
+                    document.getElementById('modal-success').classList.remove('hidden');
+                    launchConfetti();
+                }, 1000);
+            }
+        }
+
+        function markDone(btn) {
+            if (btn.classList.contains('bg-green-100')) return; // Already done
+
+            btn.classList.remove('border-rose-500', 'text-rose-500', 'hover:bg-rose-50');
+            btn.classList.add('bg-green-100', 'text-green-700', 'border-transparent', 'check-anim');
+            btn.innerHTML = '<span>✅ Feito!</span>';
+            
+            // Add visual check to card
+            const card = btn.closest('.exercise-card');
+            card.classList.add('border-green-200');
+            
+            updateProgress();
+        }
+
+        function startTimer(btn, seconds) {
+            if (btn.disabled) return;
+            
+            const originalText = btn.innerHTML;
+            const card = btn.closest('.exercise-card');
+            const timerBarContainer = card.querySelector('.timer-display');
+            const timerBar = timerBarContainer.querySelector('div');
+
+            btn.disabled = true;
+            btn.classList.remove('bg-rose-500', 'hover:bg-rose-600');
+            btn.classList.add('bg-gray-200', 'text-gray-500', 'cursor-default');
+            
+            // Show bar
+            timerBarContainer.classList.remove('hidden');
+            timerBar.style.width = '100%';
+
+            let timeLeft = seconds;
+            btn.innerHTML = `<span class="font-mono text-lg font-bold">${timeLeft}s</span>`;
+            
+            // Start animation
+            // Reset width to trigger transition
+            setTimeout(() => {
+                timerBar.style.transitionDuration = `${seconds}s`;
+                timerBar.style.width = '0%';
+            }, 50);
+
+            const interval = setInterval(() => {
+                timeLeft--;
+                btn.innerHTML = `<span class="font-mono text-lg font-bold">${timeLeft}s</span>`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    playBeep();
+                    
+                    // Transformation to Done
+                    btn.classList.remove('bg-gray-200', 'text-gray-500');
+                    btn.classList.add('bg-green-100', 'text-green-700', 'check-anim');
+                    btn.innerHTML = '<span>✅ Feito!</span>';
+                    timerBarContainer.classList.add('hidden');
+                    card.classList.add('border-green-200');
+
+                    updateProgress();
+                }
+            }, 1000);
+        }
+
+        function closeModal() {
+            document.getElementById('modal-success').classList.add('hidden');
+        }
+
+        function resetTraining() {
+            window.location.reload();
+        }
+
+        // Simple confetti effect
+        function launchConfetti() {
+            // Placeholder for confetti logic if library was added, 
+            // for this single file we stick to the modal popup.
+        }
+    </script>
+</body>
+</html>
